@@ -1,3 +1,16 @@
+# OS generated files #
 .DS_Store
-node_modules
-.sass-cache
+.DS_Store?
+._*
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+nbproject/
+.idea/
+.git/
+.vscode
+/.project
+*.log
+
+/node_modules/

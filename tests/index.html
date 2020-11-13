@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<title>
+		Table Sorter Test Page
+	</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		table{
+			font-family: Verdana;
+			border-collapse: collapse;
+			border-spacing: 0;
+			border-left: 1px solid #ccc;
+			border-top: 1px solid #ccc;
+		}
+		table th, table td{
+			border-right: 1px solid #ccc;
+			border-bottom: 1px solid #ccc;
+			padding: 4px 10px;
+			background-color: #eee;
+		}
+	</style>
+</head>
+<body>
+
+<h1>Table Sorter Test Page</h1>
+
+<h2>Table with multiple types</h2>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Number</th>
+		<th>Number</th>
+		<th>Number</th>
+		<th>Float</th>
+		<th>Date</th>
+		<th>Time</th>
+		<th>Datetime</th>
+		<th>Currency - $</th>
+		<th>Currency - &euro;</th>
+		<th>Percentage</th>
+		<th>HTML</th>
+		<th>Progress</th>
+	</tr>
+	<tr>
+		<td>Bob</td>
+		<td>5</td>
+		<td>111,000</td>
+		<td>111 000</td>
+		<td>10.5</td>
+		<td>August 16, 2003</td>
+		<td>5:10</td>
+		<td>August 16, 2003 9:10</td>
+		<td>$111</td>
+		<td>&euro;111</td>
+		<td>5%</td>
+		<td><strike>Bob</strike></td>
+		<td><progress value="5" max="100">5%</progress></td>
+	</tr>
+	<tr>
+		<td>Jim</td>
+		<td>0</td>
+		<td>2,000</td>
+		<td>2 000</td>
+		<td>10.0</td>
+		<td>January 22, 2003</td>
+		<td>0:33</td>
+		<td>August 16, 2003 1:33</td>
+		<td>$2k</td>
+		<td>&euro;2M</td>
+		<td>0%</td>
+		<td><marquee>Jim</marquee></td>
+		<td><progress value="0" max="100">0%</progress></td>
+	</tr>
+	<tr>
+		<td>Arthur</td>
+		<td>77</td>
+		<td>3,000</td>
+		<td>3 000</td>
+		<td>10.77</td>
+		<td>January 7, 2003</td>
+		<td>22:22</td>
+		<td>January 7, 2003 22:22</td>
+		<td>$30</td>
+		<td>&euro;30</td>
+		<td>77%</td>
+		<td><i>Arthur</i></td>
+		<td><progress value="77" max="100">77%</progress></td>
+	</tr>
+	<tr>
+		<td>Zuri</td>
+		<td>111</td>
+		<td>400</td>
+		<td>400</td>
+		<td>10.111</td>
+		<td>May 1, 1985</td>
+		<td>11:00</td>
+		<td>August 16, 2003 21:15</td>
+		<td>$9</td>
+		<td>&euro;9</td>
+		<td>111%</td>
+		<td><b>Zuri</b></td>
+		<td><progress value="100" max="100">100%</progress></td>
+	</tr>
+	<tr>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>n/a</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+	</tr>
+</table>
+
+<h2>Table with range values</h2>
+
+<style>
+	.bordered{
+		filter: drop-shadow(6px 4px 4px #777777);
+	}
+	.bold{
+		font-weight:bold;
+	}
+</style>
+<table class="bordered">
+	<tbody>
+	<tr>
+		<td>1</td>
+		<td>-5</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>-4</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>-3</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>-2</td>
+	</tr>
+	<tr>
+		<td style="font-weight:bold;">5</td>
+		<td class="bold">-1</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>0</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>4</td>
+	</tr>
+	</tbody>
+</table>
+
+<h2>Table with double header</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th colspan="2">Rebounds</th>
+		</tr>
+		<tr>
+			<th>Name</th>
+			<th>Number</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Zuri</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>Mike</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>Bob</td>
+			<td>3</td>
+		</tr>
+	</tbody>
+</table>
+
+<h2>Table with thead, tbody, tfoot</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Number</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Zuri</td>
+			<td>4</td>
+		</tr>
+		<tr>
+			<td>Mike</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>Bob</td>
+			<td>3</td>
+		</tr>
+		<tr>
+			<td>Jim</td>
+			<td>1</td>
+		</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<th>Name</th>
+		<th>Number</th>
+	</tr>
+	</tfoot>
+</table>
+
+<h2>Table without thead, tbody, tfoot</h2>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Number</th>
+	</tr>
+	<tr>
+		<td>Zuri</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>Mike</td>
+		<td>-2</td>
+	</tr>
+	<tr>
+		<td>Bob</td>
+		<td>11</td>
+	</tr>
+</table>
+
+<h2>Table with thead, but no td</h2>
+
+<table>
+	<thead>
+		<tr>
+			<td>Name</td>
+			<td>Number</td>
+		</tr>
+	</thead>
+	<tr>
+		<td>Zuri</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>Mike</td>
+		<td>-2</td>
+	</tr>
+	<tr>
+		<td>Bob</td>
+		<td>11</td>
+	</tr>
+</table>
+
+<h2>Table without thead, tbody, tfoot and even without th</h2>
+
+<table>
+	<tr>
+		<td>Zuri</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>Mike</td>
+		<td>-2</td>
+	</tr>
+	<tr>
+		<td>Bob</td>
+		<td>11</td>
+	</tr>
+</table>
+
+
+<script src="../bookmarklet.js"></script>
+</body>
+</html>
