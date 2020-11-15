@@ -1,7 +1,9 @@
 javascript:(function(){
 	/* Smart table sort bookmarklet + conditional formatting */
 	/* Author: Vilius L.
+	/* URL: https://github.com/viliusle/smart-table-sort-bookmarklet */
 	/* Based on https://github.com/HubSpot/sortable */
+
 	var addEventListener, clickEvents, numberRegExp, sortable, trimRegExp;
 
 	numberRegExp = /^-?[£$¤]?[\d,.]+%?$/;
@@ -56,65 +58,79 @@ javascript:(function(){
 			style.textContent = CSS;
 			document.head.append(style);
 
-			/*prepare tables - fix "thead td" to "thead th"*/
 			var tables = document.querySelectorAll('table');
-			for(var i = 0; i < tables.length; i++) {
-				var tables_thead_td = tables[i].querySelectorAll('thead td');
-				if(tables_thead_td.length > 0){
-					tables_thead_td[0].parentNode.innerHTML = tables_thead_td[0].parentNode.innerHTML
+			for(var k = 0; k < tables.length; k++) {
+				var table = tables[k];
+
+				/* fix "thead td" to "thead th" */
+				var targets = table.querySelectorAll('thead td');
+				if(targets.length > 0){
+					targets[0].parentNode.innerHTML = targets[0].parentNode.innerHTML
 						.replace(/<td/gi, '<th')
 						.replace(/<\/td>/gi, '</th>');
 				}
-			}
 
-			/*prepare tables - drop thead with rowspan*/
-			var tables = document.querySelectorAll('table thead tr');
-			for(var i = 0; i < tables.length; i++) {
-				var table_errors = tables[i].querySelectorAll('th[colspan]');
-				if(table_errors.length > 0){
-					tables[i].parentNode.removeChild(tables[i]);
+				/* drop thead with rowspan */
+				var targets = table.querySelectorAll('thead tr');
+				for(var i = 0; i < targets.length; i++) {
+					var table_errors = targets[i].querySelectorAll('th[colspan]');
+					if(table_errors.length > 0){
+						targets[i].parentNode.removeChild(targets[i]);
+					}
 				}
-			}
 
-			/*prepare tables without thead and th"*/
-			var tables = document.querySelectorAll('table');
-			for(var i = 0; i < tables.length; i++) {
-				var table_thead = tables[i].querySelectorAll('thead');
-				if(table_thead.length > 0)
-					continue;
-				var table_th = tables[i].querySelectorAll('th');
-				if(table_th.length > 0)
-					continue;
-
-				var table_row = tables[i].querySelectorAll('tr');
-				if(table_row.length == 0)
-					continue;
-
-				var thead = document.createElement('thead');
-				var table__thead = tables[i].appendChild(thead);
-
-				var tr = document.createElement('tr');
-				var tr_object = table__thead.appendChild(tr);
-
-				var table_rows = table_row[0].querySelectorAll('td');
-				for(var j = 0; j < table_rows.length; j++) {
-					var header_name = "#" + (j + 1);
-
-					tr_object.appendChild(document.createElement("th")).
-					appendChild(document.createTextNode(header_name));
+				/* drop invisible thead rows */
+				var targets = table.querySelectorAll('thead tr');
+				for(var i = 0; i < targets.length; i++) {
+					if(targets[i].offsetParent === null){
+						targets[i].parentNode.removeChild(targets[i]);
+					}
 				}
-			}
 
-			/*If there’s no tHead but the first tBody row contains ths, create a tHead and move that row into it.*/
-			var firstTBodyRow, tHead;
-			var tables = document.querySelectorAll('table');
-			for(var i = 0; i < tables.length; i++) {
-				var table = tables[i];
-				if (!table.tHead && (firstTBodyRow = table.tBodies[0].rows[0]).children[0].tagName === 'TH') {
-					tHead = document.createElement('thead');
+				/* drop rows that are "Totals"  */
+				var targets = table.querySelectorAll('tr');
+				for(var i = 0; i < targets.length; i++) {
+					if(targets[i].className.toLowerCase().indexOf("total") > -1){
+						targets[i].parentNode.removeChild(targets[i]);
+					}
+				}
+
+				/* merge multiple tbodies */
+				var targets = table.querySelectorAll('tbody');
+				if(targets.length > 1){
+					for(var i = 1; i < targets.length; i++) {
+						targets[0].innerHTML = targets[0].innerHTML + "\n" + targets[i].innerHTML;
+						targets[i].parentNode.removeChild(targets[i]);
+					}
+				}
+
+				/* prepare tables without thead and th" */
+				var table_thead = table.querySelectorAll('thead');
+				var table_th = table.querySelectorAll('th');
+				var table_row = table.querySelectorAll('tr');
+				if(table_thead.length == 0 && table_th.length == 0 && table_row.length > 0){
+					var thead = document.createElement('thead');
+					var table__thead = table.appendChild(thead);
+
+					var tr = document.createElement('tr');
+					var tr_object = table__thead.appendChild(tr);
+
+					var table_rows = table_row[0].querySelectorAll('td');
+					for(var j = 0; j < table_rows.length; j++) {
+						var header_name = "#" + (j + 1);
+
+						tr_object.appendChild(document.createElement("th")).appendChild(document.createTextNode(header_name));
+					}
+				}
+
+				/* If there’s no tHead but the first tBody row contains ths, create a tHead and move that row into it. */
+				var firstTBodyRow = table.tBodies[0].rows[0];
+				if (!table.tHead && firstTBodyRow.children[0].tagName === 'TH') {
+					var tHead = document.createElement('thead');
 					tHead.appendChild(firstTBodyRow);
 					table.insertBefore(tHead, table.firstChild);
 				}
+
 			}
 		},
 		highlight:function(){
@@ -227,13 +243,15 @@ javascript:(function(){
 			for (_i = 0, _len = tables.length; _i < _len; _i++) {
 				table = tables[_i];
 
-				/* must have 1 header */
-				if (table.tHead && table.tHead.rows.length == 1) {
-					table.classList.add('sortable');
+				if (!table.tHead){
+					console.log("Table can not be sorted: there are no headers.", table);
 				}
-				else{
-					console.log("Table can not be sorted: no headers", table);
-					continue;
+				else if (table.tHead.rows.length != 1){
+					console.log("Table can not be sorted: first header has more than 1 row.", table);
+				}
+				else {
+					/* sortable */
+					table.classList.add('sortable');
 				}
 
 				_results.push(sortable.initTable(table));
