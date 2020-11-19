@@ -440,8 +440,8 @@ javascript:(function(){
 	sortable.setupTypes([
 		{
 			name: 'numeric',
-			defaultSortDirection: 'ascending',
-			reverse: true,
+			defaultSortDirection: 'descending',
+			reverse: false,
 			prepare: function(a) {
 				a = a.toString();
 				a = a.replace(/\u20ac/g, ''); /*euro*/
