@@ -398,7 +398,7 @@ javascript:(function(){
 					}
 				}
 			}
-			var uniquetypes = Array.from(new Set(types));
+			var uniquetypes = types.filter((v, i, a) => a.indexOf(v) === i);
 			if(uniquetypes.length == 1){
 				/*1 type - take it*/
 				return sortable.typesObject[uniquetypes[0]];
