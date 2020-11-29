@@ -124,13 +124,15 @@ javascript:(function(){
 				}
 
 				/* If there’s no tHead but the first tBody row contains ths, create a tHead and move that row into it. */
+				if(table.tBodies.length == 0){
+					continue;
+				}
 				var firstTBodyRow = table.tBodies[0].rows[0];
 				if (!table.tHead && firstTBodyRow.children[0].tagName === 'TH') {
 					var tHead = document.createElement('thead');
 					tHead.appendChild(firstTBodyRow);
 					table.insertBefore(tHead, table.firstChild);
 				}
-
 			}
 		},
 		highlight:function(){
