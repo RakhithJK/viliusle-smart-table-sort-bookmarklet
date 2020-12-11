@@ -10,7 +10,7 @@ page you visit. Forked from [HubSpot/sortable](https://github.com/HubSpot/sortab
 
 [**Demo**](https://jsbin.com/buwewimunu/edit?output)
 
-![Smart table sort bookmarklet](https://raw.githubusercontent.com/viliusle/smart-table-sort-bookmarklet/master/images/preview.png)
+![Smart table sort bookmarklet](https://raw.githubusercontent.com/viliusle/smart-table-sort-bookmarklet/master/images/preview.gif)
 
 ## Install
 * Create new bookmark for any page.
