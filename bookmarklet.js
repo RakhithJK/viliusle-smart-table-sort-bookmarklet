@@ -4,11 +4,16 @@ javascript:(function(){
 	/* URL: https://github.com/viliusle/smart-table-sort-bookmarklet */
 	/* Based on https://github.com/HubSpot/sortable */
 
-	var addEventListener, clickEvents, numberRegExp, sortable, trimRegExp;
+	/* settings */
+	var CONDITIONAL_FORMATTING = true;
+	var CONDITIONAL_FORMATTING_QUERY = 'table';
+	var TABLES_QUERY = 'table';
 
-	numberRegExp = /^-?[£$¤]?[\d,.]+%?$/;
-	trimRegExp = /^\s+|\s+$/g;
-	clickEvents = ['click'];
+	var addEventListener;
+	var sortable;
+	var numberRegExp = /^-?[£$¤]?[\d,.]+%?$/;
+	var trimRegExp = /^\s+|\s+$/g;
+	var clickEvents = ['click'];
 
 	addEventListener = function(el, event, handler) {
 		if (el.addEventListener != null) {
@@ -58,7 +63,7 @@ javascript:(function(){
 			style.textContent = CSS;
 			document.head.append(style);
 
-			var tables = document.querySelectorAll('table');
+			var tables = document.querySelectorAll(TABLES_QUERY);
 			for(var k = 0; k < tables.length; k++) {
 				var table = tables[k];
 
@@ -108,7 +113,7 @@ javascript:(function(){
 				var table_thead = table.querySelectorAll('thead');
 				var table_th = table.querySelectorAll('th');
 				var table_row = table.querySelectorAll('tr');
-				if(table_thead.length == 0 && table_th.length == 0 && table_row.length > 0){
+				if(table_thead.length == 0 && table_th.length == 0 && table_row.length > 1){
 					var thead = document.createElement('thead');
 					var table__thead = table.appendChild(thead);
 
@@ -136,6 +141,8 @@ javascript:(function(){
 			}
 		},
 		highlight:function(){
+			if(CONDITIONAL_FORMATTING == false)
+				return;
 			parseNumber = function(a) {
 				a = a.toString()
 					.replace(/\u20ac/g, '') /* dollar */
@@ -156,7 +163,7 @@ javascript:(function(){
 				return a;
 			};
 
-			var tables = document.querySelectorAll('table');
+			var tables = document.querySelectorAll(CONDITIONAL_FORMATTING_QUERY);
 			for(var i = 0; i < tables.length; i++) {
 				/*tables*/
 				var numeric_cols_map = [];
@@ -238,7 +245,7 @@ javascript:(function(){
 				options = {};
 			}
 			if (options.selector == null) {
-				options.selector = 'table';
+				options.selector = TABLES_QUERY;
 			}
 			tables = document.querySelectorAll(options.selector);
 			_results = [];
@@ -316,7 +323,8 @@ javascript:(function(){
 				if (!sorted) {
 					if (type.compare != null) {
 						_compare = type.compare;
-					} else {
+					}
+					else {
 						_compare = function(a, b) {
 							return b - a;
 						};
@@ -327,7 +335,8 @@ javascript:(function(){
 						}
 						if (type.reverse) {
 							return _compare(b[0], a[0]);
-						} else {
+						}
+						else {
 							return _compare(a[0], b[0]);
 						}
 					};
@@ -345,7 +354,8 @@ javascript:(function(){
 						row = rowArray[_k];
 						tBody.appendChild(row[1]);
 					}
-				} else {
+				}
+				else {
 					_ref1 = tBody.rows;
 					for (_l = 0, _len3 = _ref1.length; _l < _len3; _l++) {
 						item = _ref1[_l];
@@ -442,8 +452,8 @@ javascript:(function(){
 	sortable.setupTypes([
 		{
 			name: 'numeric',
-			defaultSortDirection: 'descending',
-			reverse: false,
+			defaultSortDirection: 'ascending',
+			reverse: true,
 			prepare: function(a) {
 				a = a.toString();
 				a = a.replace(/\u20ac/g, ''); /*euro*/
