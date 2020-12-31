@@ -27,6 +27,7 @@ javascript:(function(){
 		prepare: function(){
 			/*inject CSS*/
 			var CSS = `
+				/*required styles for sorting*/
 				table.sortable th{
 					cursor: pointer;
 				}
@@ -52,6 +53,7 @@ javascript:(function(){
 				table.sortable th[data-sorted-direction="descending"]:after{
 					border-top: 8px solid #555;
 				}
+				/* additional styles - Zebra rows */
 				table.sortable td {
 					background-color: white;
 				}
