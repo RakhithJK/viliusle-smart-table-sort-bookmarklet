@@ -105,7 +105,11 @@ javascript:(function(){
 				/* merge multiple tbodies */
 				var targets = table.querySelectorAll('tbody');
 				if(targets.length > 1){
+					var parent = targets[0].parentNode;
 					for(var i = 1; i < targets.length; i++) {
+						if(targets[i].parentNode != parent){
+							continue;
+						}
 						targets[0].innerHTML = targets[0].innerHTML + "\n" + targets[i].innerHTML;
 						targets[i].parentNode.removeChild(targets[i]);
 					}
